@@ -1,0 +1,104 @@
+#include <cstdio>
+#include <cstring>
+const int MAXL = 1000;
+const char *cf = "/config";
+const char *tf = "template.tex";
+const char *head = "head";
+const char *tail = "tail";
+int secn;
+char sec[20][MAXL];
+FILE *tex = NULL;
+char temp[MAXL];
+struct LineBreaker {
+    char name[MAXL], file[MAXL];
+    int nl, fl;
+    void solve(const char s[]) {
+        nl = fl = 0;
+        int i = 0;
+        while (s[i] && s[i] != '<')
+            i++;
+        if (s[i])
+            i++;
+        while (s[i] && s[i] != '>')
+            name[nl++] = s[i++];
+        while (s[i] && s[i] != '<')
+            i++;
+        if (s[i])
+            i++;
+        while (s[i] && s[i] != '>')
+            file[fl++] = s[i++];
+        name[nl] = file[fl] = 0;
+    }
+} lb;
+void read_dir() {
+    FILE *dir = fopen(cf + 1, "r");
+    secn = 0;
+    while (fgets(sec[secn++], MAXL, dir) != NULL) {}
+    fclose(dir);
+    while (sec[secn - 1][0] == 0 && secn > 0)
+        secn--;
+    for (int i = 0; i < secn; ++i) {
+        size_t len = strlen(sec[i]);
+        while(len > 0 && (sec[i][len - 1] == '\n' || sec[i][len - 1] == '\r')) {
+            sec[i][len - 1] = '\0';
+            len--;
+        }
+    }
+}
+void file(const char *filename) {
+    FILE *fp = fopen(filename, "r");
+    while (fgets(temp, MAXL, fp) != NULL)
+        fprintf(tex, temp);
+    fclose(fp);
+}
+
+int endsWith(const char *str, const char *suffix) {
+    if (!str || !suffix)
+        return 0;
+    size_t lenstr = strlen(str);
+    size_t lensuffix = strlen(suffix);
+    if (lensuffix > lenstr)
+        return 0;
+    return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
+}
+int main() {
+    tex = fopen(tf, "w");
+    file(head);
+    read_dir();
+    for (int i = 0; i < secn; ++i) {
+        fprintf(tex, "\\section{%s}\n", sec[i]);
+        memcpy(temp, sec[i], sizeof temp);
+        strcat(temp, cf);
+        printf("section: %s\n", sec[i]);
+        FILE *fp = fopen(temp, "r");
+        while (fgets(temp, MAXL, fp) != NULL) {
+            if (temp[0] != '<')
+                break;
+            lb.solve(temp);
+            printf("subsection %s with %s\n", lb.name, lb.file);
+            fprintf(tex, "\\subsection{%s}\n", lb.name);
+            memcpy(temp, sec[i], sizeof temp);
+            temp[strlen(temp) + 1] = 0;
+            temp[strlen(temp)] = '/';
+            strcat(temp, lb.file);
+            char lang[10] = "";
+            if (endsWith(lb.file, "cpp")) {
+                strcpy(lang, "c++");
+            }
+            if (endsWith(lb.file, "h")) {
+                strcpy(lang, "c++");
+            }
+            if (endsWith(lb.file, "java")) {
+                strcpy(lang, "java");
+            }
+            if (endsWith(lb.file, "tex")) {
+                strcpy(lang, "tex");
+            }
+            fprintf(tex, "\\lstinputlisting[language=%s]{%s}\n", lang, temp);
+        }
+        fclose(fp);
+    }
+    file(tail);
+    fclose(tex);
+    return 0;
+}

@@ -1,0 +1,23 @@
+\documentclass{hxie_template}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[hang,flushmargin]{footmisc}
+\usepackage[utf8]{vietnam}
+
+\university{Đại học Khoa học tự nhiên, ĐHQG-HCM}
+\team{HCMUS-mailsinhvien}
+\participants{Trần Thiên Phúc \\ Hồ Phong Lĩnh \\ Huỳnh Ngọc Nhân}
+\ulogo{hcmus.png}
+
+\graphicspath{ {./images/} }
+
+\begin{document}
+\makecover
+
+\begin{multicols}{2}
