@@ -5,4 +5,6 @@ template.aux
 template.log
 template.out
 template.synctex.gz
+.template.tex.swp
+.clang-format
 main
