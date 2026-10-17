@@ -2,7 +2,7 @@
 
 **Original repository**: [Isrothy/templates](https://github.com/Isrothy/templates)
 
-## How to use
+## How to use (Windows)
 
 1. Write code.
 2. Change the config file.
