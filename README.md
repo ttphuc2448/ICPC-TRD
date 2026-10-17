@@ -1,21 +1,17 @@
-Original repository: https://github.com/Isrothy/templates
+# ICPC Team Reference Document
 
-ACM-ICPC Code Template & LaTeX
-==============================
-Generate ACM-ICPC Code Template with Latex fashion.
+**Original repository**: [Isrothy/templates](https://github.com/Isrothy/templates)
 
-(1) Write code.
+## How to use
 
-(2) Change the config file.
+1. Write code.
+2. Change the config file.
+3. Run code in `main.cpp` and `template.tex`.
 
-(3) Run code in `main.cpp` and `template.tex`.
+## File Description
 
-Usage
------
-**./config:** the directory you sort in pdf file.
+`./config`: the directory you sort in pdf file.
 
-**./$directory/config:** the code you wirte and the name you want to display in pdf file.
+`./$directory/config`: the code you wirte and the name you want to display in pdf file.
 
-**head:** you can change the author here.
-
-Code inside is for fun, that's all.
+`head`: you can change the author here.
